@@ -1,3 +1,6 @@
+import re
+from typing import List
+
 latestd2xVersion = "10-beta52"  # Set this to the latest version as needed
 
 def translate_keywords_to_english(csv_content: str) -> str:

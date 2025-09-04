@@ -1,9 +1,10 @@
 import re
+from typing import Optional
 
 class CustomError(Exception):
     pass
 
-def get_console_region(data: str) -> str | None:
+def get_console_region(data: str) -> Optional[str]:
     region_line = next((line for line in data.split('\n') if line.strip().lower().startswith('region:')), None)
     if not region_line:
         return None
@@ -22,19 +23,18 @@ def get_console_region(data: str) -> str | None:
     return None
 
 def get_region_short_code(region: str) -> str:
-    match region:
-        case 'PAL':
-            return 'E'
-        case 'NTSC-U':
-            return 'U'
-        case 'NTSC-J':
-            return 'J'
-        case 'KOR':
-            return 'K'
-        case _:
-            return region
+    if region == 'PAL':
+        return 'E'
+    elif region == 'NTSC-U':
+        return 'U'
+    elif region == 'NTSC-J':
+        return 'J'
+    elif region == 'KOR':
+        return 'K'
+    else:
+        return region
 
-def get_hbc_version(data: str) -> str | None:
+def get_hbc_version(data: str) -> Optional[str]:
     hbc_line = next((line for line in data.split('\n') if 'Homebrew Channel' in line), None)
     if not hbc_line:
         return None
@@ -42,7 +42,7 @@ def get_hbc_version(data: str) -> str | None:
     match = re.search(r'Homebrew Channel\s+([0-9.]+)', hbc_line)
     return match.group(1) if match else None
 
-def get_system_menu_version(data: str) -> str | None:
+def get_system_menu_version(data: str) -> Optional[str]:
     system_menu_line = next((line for line in data.split('\n') if 'System Menu' in line), None)
     if not system_menu_line:
         return None
@@ -51,7 +51,7 @@ def get_system_menu_version(data: str) -> str | None:
     version = version.strip().replace(',', '')
     return version or None
 
-def get_firmware(system_menu_version: str) -> dict[str, object] | None:
+def get_firmware(system_menu_version: str) -> Optional[dict[str, object]]:
     firmstart = re.sub(r'\(.*?\)', '', system_menu_version).strip()
     firmend = re.search(r'\((.*?)\)', system_menu_version)
     firmend_parsed = int(firmend.group(1).replace('v', '')) if firmend else 0
@@ -80,7 +80,7 @@ def get_latest_sm_version(data: dict[str, object]) -> str:
     else:
         return data['firmware']
 
-def get_console_type(data: str) -> str | None:
+def get_console_type(data: str) -> Optional[str]:
     console_type_line = next((line for line in data.split('\n') if 'Console Type' in line), None)
     if not console_type_line:
         return None
