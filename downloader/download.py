@@ -2,9 +2,9 @@ import os
 import hashlib
 from typing import List, Optional, Dict, Any
 from downloader.osc_download import osc_download
-from downloader.nus_download import nus_title_download
+from downloader.wiipy.nus import nus_title_download
 from downloader.database import get_database_entry
-
+from downloader.d2xbuild import buildD2XCios
 
 TEMP_DIRECTORY = os.environ.get("TEMP_DIRECTORY") or os.path.join(os.getcwd(), "temp-downloads")
 
@@ -67,7 +67,7 @@ async def download_entry(entry: str, output_path: Optional[str] = None) -> Dict[
         )
     elif database_entry.category == "OSC":
         osc_download(database_entry, entry_path)
-    else:
+    elif database_entry.category == "d2x":
         base_entry_path = os.path.join(output_path, database_entry.basewad) + ".wad"
         nus_title_download(
             tid=f"{database_entry.code1}{database_entry.code2}",
@@ -77,7 +77,7 @@ async def download_entry(entry: str, output_path: Optional[str] = None) -> Dict[
         )
         print(f"Base WAD downloaded: {database_entry.basewad}")
         verify_file(base_entry_path, database_entry.md5base, database_entry.md5basealt)
-        #await build_cios(database_entry, entry_path, base_entry_path)
+        buildD2XCios(database_entry, entry_path, base_entry_path)
         # elif database_entry["category"] == "patchios":
         #     base_wad_path = f"/tmp/{database_entry['basewad']}.wad"
         #     base_entry = get_database_entry_from_wadname(database_entry["basewad"])
