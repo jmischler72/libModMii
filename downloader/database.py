@@ -7,10 +7,10 @@ from typing import Optional, Union
 class DatabaseEntry:
     name: str
     wadname: str
-    md5: str
     code1: str
-    code2: str
-    version: Union[int, str]
+    md5: Optional[str] = None
+    version: Optional[int] = None
+    code2: Optional[str] = None
     code2new: Optional[str] = None
     md5alt: Optional[str] = None
     category: Optional[str] = None

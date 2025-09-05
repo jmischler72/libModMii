@@ -58,27 +58,26 @@ async def download_entry(entry: str, output_path: Optional[str] = None) -> Dict[
         raise Exception(f"Unsupported category for download: {database_entry.category}")
 
     # Handle download based on category
-    if database_entry.category in ("cios", "d2x"):
-        base_entry_path = os.path.join(output_path, database_entry.basewad) + ".wad"
-
+    if database_entry.category == "ios":
         nus_title_download(
             tid=f"{database_entry.code1}{database_entry.code2}",
             version=database_entry.version,
-            wad=base_entry_path
+            wad=entry_path,
+            verbose=False
+        )
+    elif database_entry.category == "OSC":
+        osc_download(database_entry, entry_path)
+    else:
+        base_entry_path = os.path.join(output_path, database_entry.basewad) + ".wad"
+        nus_title_download(
+            tid=f"{database_entry.code1}{database_entry.code2}",
+            version=database_entry.version,
+            wad=base_entry_path,
+            verbose=False
         )
         print(f"Base WAD downloaded: {database_entry.basewad}")
         verify_file(base_entry_path, database_entry.md5base, database_entry.md5basealt)
         #await build_cios(database_entry, entry_path, base_entry_path)
-    else:
-        if database_entry.category == "ios":
-            nus_title_download(
-                tid=f"{database_entry.code1}{database_entry.code2}",
-                version=database_entry.version,
-                wad=entry_path,
-                verbose=False
-            )
-        elif database_entry.category == "OSC":
-            await osc_download(database_entry, entry_path)
         # elif database_entry["category"] == "patchios":
         #     base_wad_path = f"/tmp/{database_entry['basewad']}.wad"
         #     base_entry = get_database_entry_from_wadname(database_entry["basewad"])
@@ -92,7 +91,8 @@ async def download_entry(entry: str, output_path: Optional[str] = None) -> Dict[
     if not entry_path or not os.path.exists(entry_path):
         raise Exception(f"File was not created after download: {database_entry.wadname}")
     
-    verify_file(entry_path, database_entry.md5, database_entry.md5alt)
+    if database_entry.md5:
+        verify_file(entry_path, database_entry.md5, database_entry.md5alt)
 
     print(f"Download completed: {database_entry.wadname}")
     return {

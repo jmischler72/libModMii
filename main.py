@@ -9,7 +9,6 @@ if __name__ == "__main__":
     print(get_database_entry("cIOS250[58]-v21") ) # Example usage of database function
 
     async def main():
-        await download_entries(["EULAU"])  # Example usage of download function
         with open('test-syscheck.csv', 'r', encoding='utf-8') as file:
             copy_data = file.read()
 
@@ -21,7 +20,9 @@ if __name__ == "__main__":
                 cMios=False
             )
             print("Analysis Result:", result)
-        except SyscheckError as e:  
+            print("WADs to Install:", result.get("wadToInstall"))
+            await download_entries(result.get("wadToInstall"))  # Example usage of download function
+        except SyscheckError as e:
             print(f"Error: {e}")
 
     asyncio.run(main())

@@ -127,3 +127,49 @@ def nus_title_download(tid, version=None, output=None, wad=None, wii=False, endp
 
     if verbose:
         print(f"Downloaded title with Title ID \"{tid}\"!")
+
+# async def build_cios(entry, output_path, base_wad_path):
+#     if os.path.exists(output_path):
+#         try:
+#             await verify_file(output_path, entry.md5, entry.md5alt)
+#             return f"WAD {entry.wadname} found in cache"
+#         except Exception:
+#             print('NUS: Cached file verification failed, re-downloading')
+#     if not entry.ciosslot or not entry.ciosversion:
+#         raise CustomError(f"Missing cIOS slot or version for {entry.wadname}")
+#     if not os.path.exists(base_wad_path):
+#         raise CustomError(f"Base WAD file not found: {base_wad_path}")
+#     d2x_modules = f"{MODMII_PATH}/Support/d2xModules"
+#     cios_map_path = f"{d2x_modules}/ciosmaps.xml"
+#     cios_version = entry.wadname[12:].replace('.wad', '')
+#     args = [
+#         "cios",
+#         "--cios-ver", cios_version,
+#         "--modules", d2x_modules,
+#         "--slot", str(entry.ciosslot),
+#         "--version", str(entry.ciosversion),
+#         base_wad_path,
+#         cios_map_path,
+#         output_path
+#     ]
+#     return await run_command(args, entry.wadname, True)
+
+# async def patch_ios(entry, output_path, base_wad_path):
+#     if os.path.exists(output_path):
+#         try:
+#             await verify_file(output_path, entry.md5, entry.md5alt)
+#             return f"WAD {entry.wadname} found in cache"
+#         except Exception:
+#             print('NUS: Cached file verification failed, re-downloading')
+#     if not entry.ciosslot or not entry.ciosversion:
+#         raise CustomError(f"Missing cIOS slot or version for {entry.wadname}")
+#     if not os.path.exists(base_wad_path):
+#         raise CustomError(f"Base WAD file not found: {base_wad_path}")
+#     tmp_output_path = output_path.replace('(', '').replace(')', '')
+#     args = [
+#         "iospatch", "-fs", "-ei", "-na", "-vd", "-s", str(entry.ciosslot),
+#         "-v", str(entry.ciosversion), base_wad_path, "-o", tmp_output_path
+#     ]
+#     await run_command(args, entry.wadname, True)
+#     copy_file(tmp_output_path, output_path)
+#     return None
