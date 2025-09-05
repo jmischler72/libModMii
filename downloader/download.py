@@ -1,6 +1,7 @@
 import os
 import hashlib
 from typing import List, Optional, Dict, Any
+from downloader.helpers.validation import verify_file
 from downloader.osc_download import osc_download
 from downloader.wiipy.nus import nus_title_download
 from downloader.database import get_database_entry
@@ -22,26 +23,7 @@ def cleanup_temp_file(file_path: str) -> None:
         print(f"Failed to cleanup temp file {file_path}: {error}")
 
 
-def verify_file(file_path: str, md5: Optional[str], md5alt: Optional[str] = None) -> None:
-    if not md5 and not md5alt:
-        raise Exception(f"No MD5 hash provided for file verification: {file_path}")
-
-    with open(file_path, "rb") as f:
-        file_buffer = f.read()
-
-    hash_val = hashlib.md5(file_buffer).hexdigest()
-    if hash_val == md5:
-        return
-
-    if md5alt and hash_val == md5alt:
-        return
-
-    raise Exception(
-        f"File verification failed for {file_path}, expected MD5: {md5}, got: {hash_val}, alternative MD5: {md5alt}"
-    )
-
-
-async def download_entry(entry: str, output_path: Optional[str] = None) -> Dict[str, Any]:
+def download_entry(entry: str, output_path: Optional[str] = None) -> Dict[str, Any]:
     database_entry = get_database_entry(entry)
     if not database_entry:
         raise Exception(f"No entry found in database for {entry}")
@@ -100,14 +82,14 @@ async def download_entry(entry: str, output_path: Optional[str] = None) -> Dict[
         "outputPath": output_path
     }
 
-async def download_entries(entries:List[str]):
+def download_entries(entries:List[str]):
     total = len(entries)
 
     print(f"Starting download of {total} WAD files...")
 
     for i in range(0, len(entries), 1):
         try:
-            entry = await download_entry(entries[i])
+            entry = download_entry(entries[i])
             print(f"Downloaded {entry['wadname']} to {entry['outputPath']}")
         except Exception as error:
             print(f"Error downloading {entries[i]}: {error}")
