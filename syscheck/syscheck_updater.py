@@ -10,7 +10,6 @@ def analyse_syscheck_data(
     extraProtection: bool = False,
     cMios: bool = False,
 ) -> Dict[str, Any]:
-
     data = validation_helpers.translate_keywords_to_english(data)
     
     if not validation_helpers.validate_syscheck_data(data):
