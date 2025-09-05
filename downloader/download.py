@@ -48,8 +48,8 @@ async def download_entry(entry: str, output_path: Optional[str] = None) -> Dict[
 
     print(f"Downloading: {database_entry.wadname}")
 
-    temp_path = ensure_temp_directory()
     if output_path is None:
+        temp_path = ensure_temp_directory()
         output_path = temp_path
         
     entry_path = os.path.join(output_path, database_entry.wadname)
@@ -100,7 +100,7 @@ async def download_entry(entry: str, output_path: Optional[str] = None) -> Dict[
         "outputPath": output_path
     }
 
-async def download_entries(entries:List[str], options:Optional[Dict[str, Any]]=None):
+async def download_entries(entries:List[str]):
     total = len(entries)
 
     print(f"Starting download of {total} WAD files...")
