@@ -1,7 +1,6 @@
 import hashlib
 from typing import Optional
 
-
 def verify_file(file_path: str, md5: Optional[str], md5alt: Optional[str] = None) -> None:
     if not md5 and not md5alt:
         raise Exception(f"No MD5 hash provided for file verification: {file_path}")

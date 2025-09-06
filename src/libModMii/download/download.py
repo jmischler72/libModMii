@@ -15,6 +15,18 @@ def download_entry(entry: str, output_path: str) -> Dict[str, Any]:
 
         
     entry_path = os.path.join(output_path, database_entry.wadname)
+    
+    if os.path.exists(entry_path):
+        try:
+            if database_entry.md5:
+                verify_file(entry_path, database_entry.md5, database_entry.md5alt)
+                print(f"WAD {database_entry.wadname} already exists in cache")
+                return {
+                    "wadname": database_entry.wadname,
+                    "outputPath": output_path
+                }
+        except Exception:
+            print('Cached file verification failed, re-downloading')
 
     if not database_entry.category and not database_entry.ciosslot:
         raise Exception(f"Unsupported category for download: {database_entry.category}")
