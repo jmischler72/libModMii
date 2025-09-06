@@ -24,3 +24,6 @@ libmodmii = "main:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
+
+[tool.setuptools.package-data]
+"" = ["assets/*"]

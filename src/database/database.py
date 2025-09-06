@@ -1,4 +1,5 @@
 import json
+import importlib.resources
 import os
 from dataclasses import dataclass
 from typing import Optional, Union
@@ -27,11 +28,9 @@ class DatabaseEntry:
     cIOSFamilyName: Optional[str] = None
     cIOSversionNum: Optional[int] = None
 
-# Define the path to the database.json file
-db_path = os.path.join(os.getcwd(), 'database.json')
 
-# Load the database
-with open(db_path, 'r', encoding='utf-8') as f:
+# Load the database.json from the assets folder using importlib.resources
+with importlib.resources.files('assets').joinpath('database.json').open('r', encoding='utf-8') as f:
     database = json.load(f)
 
 def get_database_entry(entry: str) -> DatabaseEntry:

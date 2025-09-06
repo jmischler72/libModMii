@@ -1,7 +1,9 @@
 import os
+import importlib.resources
 from downloader.wiipy.ciosbuild import build_cios
 
-d2x_modules = os.path.join(os.getcwd(), "Support", "d2xModules")
+# Get the path to the d2xModules folder inside assets
+d2x_modules = str(importlib.resources.files('assets').joinpath('d2xModules'))
 
 def buildD2XCios(entry, output_path, base_wad_path):
     # if os.path.exists(output_path):
