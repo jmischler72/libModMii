@@ -1,38 +1,18 @@
 import os
-import hashlib
-from typing import List, Optional, Dict, Any
+from typing import  Dict, Any
 from .validation import verify_file
 from .osc_download import osc_download
 from .wiipy.nus import nus_title_download
 from .database import get_database_entry
 from .d2xbuild import buildD2XCios
 
-TEMP_DIRECTORY = os.environ.get("TEMP_DIRECTORY") or os.path.join(os.getcwd(), "temp-downloads")
-
-def ensure_temp_directory() -> str:
-    if not os.path.exists(TEMP_DIRECTORY):
-        os.makedirs(TEMP_DIRECTORY, exist_ok=True)
-    return TEMP_DIRECTORY
-
-
-def cleanup_temp_file(file_path: str) -> None:
-    try:
-        if os.path.exists(file_path):
-            os.remove(file_path)
-    except Exception as error:
-        print(f"Failed to cleanup temp file {file_path}: {error}")
-
-
-def download_entry(entry: str, output_path: Optional[str] = None) -> Dict[str, Any]:
+def download_entry(entry: str, output_path: str) -> Dict[str, Any]:
     database_entry = get_database_entry(entry)
     if not database_entry:
         raise Exception(f"No entry found in database for {entry}")
 
     print(f"Downloading: {database_entry.wadname}")
 
-    if output_path is None:
-        temp_path = ensure_temp_directory()
-        output_path = temp_path
         
     entry_path = os.path.join(output_path, database_entry.wadname)
 
@@ -81,15 +61,3 @@ def download_entry(entry: str, output_path: Optional[str] = None) -> Dict[str, A
         "wadname": database_entry.wadname,
         "outputPath": output_path
     }
-
-def download_entries(entries:List[str]):
-    total = len(entries)
-
-    print(f"Starting download of {total} WAD files...")
-
-    for i in range(0, len(entries), 1):
-        try:
-            entry = download_entry(entries[i])
-            print(f"Downloaded {entry['wadname']} to {entry['outputPath']}")
-        except Exception as error:
-            print(f"Error downloading {entries[i]}: {error}")

@@ -46,3 +46,6 @@ def get_database_entry_from_wadname(wadname: str) -> Optional[DatabaseEntry]:
         if entry['wadname'] == wadname:
             return DatabaseEntry(**entry)
     return None
+
+def get_all_entries() -> dict:
+    return database['entries']
