@@ -18,10 +18,3 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/jmischler72/libModMii"
-
-
-[tool.setuptools.packages.find]
-where = ["."]
-
-[tool.setuptools.package-data]
-"*" = ["assets/*"]

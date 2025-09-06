@@ -30,7 +30,7 @@ class DatabaseEntry:
 
 
 # Load the database.json from the assets folder using importlib.resources
-with importlib.resources.files('assets').joinpath('database.json').open('r', encoding='utf-8') as f:
+with importlib.resources.files('src.libModMii.assets').joinpath('database.json').open('r', encoding='utf-8') as f:
     database = json.load(f)
 
 def get_database_entry(entry: str) -> DatabaseEntry:
