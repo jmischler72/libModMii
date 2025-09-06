@@ -179,11 +179,11 @@ def process_db_file():
       to_delete.append(entry_key)
   for key in to_delete:
     del result['entries'][key]
-  output_file_path = os.path.join(os.path.dirname(__file__), '../database/database.json')
+  output_file_path = os.path.join(os.path.dirname(__file__), '../libModMii/assets/database.json')
   os.makedirs(os.path.dirname(output_file_path), exist_ok=True)
   with open(output_file_path, 'w', encoding='utf-8') as f:
     json.dump(result, f, indent=2)
-  print('Conversion completed! Output written to public/database.json')
+  print('Conversion completed! Output written to libModMii/assets/database.json')
   print(f'Converted {len(result["entries"])} entries')
 
 process_db_file()
