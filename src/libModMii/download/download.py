@@ -1,11 +1,11 @@
 import os
 import hashlib
 from typing import List, Optional, Dict, Any
-from download.validation import verify_file
-from download.osc_download import osc_download
-from download.wiipy.nus import nus_title_download
+from .validation import verify_file
+from .osc_download import osc_download
+from .wiipy.nus import nus_title_download
 from database import get_database_entry
-from download.d2xbuild import buildD2XCios
+from .d2xbuild import buildD2XCios
 
 TEMP_DIRECTORY = os.environ.get("TEMP_DIRECTORY") or os.path.join(os.getcwd(), "temp-downloads")
 

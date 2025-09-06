@@ -1,5 +1,6 @@
 from typing import Dict, Any
-from syscheck.helpers import info, validation
+from . import info_helpers as info
+from . import validation_helpers as validation
 
 class SyscheckError(Exception):
     pass
