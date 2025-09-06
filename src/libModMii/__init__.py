@@ -1,6 +1,6 @@
-__all__ = ["database", "downloader", "syscheck", "usbloader"]
+__all__ = ["database", "download", "syscheck", "usbloader"]
 
 from . import database
-from . import downloader
+from . import download
 from . import syscheck
 from . import usbloader

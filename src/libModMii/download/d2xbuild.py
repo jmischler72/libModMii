@@ -1,6 +1,6 @@
 import os
 import importlib.resources
-from downloader.wiipy.ciosbuild import build_cios
+from download.wiipy.ciosbuild import build_cios
 
 # Get the path to the d2xModules folder inside assets
 d2x_modules = str(importlib.resources.files('src.libModMii.assets').joinpath('d2xModules'))
