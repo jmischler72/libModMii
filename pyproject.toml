@@ -19,8 +19,6 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/jmischler72/libModMii"
 
-[project.scripts]
-libmodmii = "main:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
