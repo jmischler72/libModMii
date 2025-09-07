@@ -1,0 +1,55 @@
+Metadata-Version: 2.4
+Name: libModMii
+Version: 0.1.9
+Summary: Python toolkit for Wii/vWii system management, inspired by ModMii and powered by libWiiPy.
+Author: jmischler72
+Project-URL: Homepage, https://github.com/jmischler72/libModMii
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+Requires-Dist: libWiiPy@ git+https://github.com/NinjaCheetah/libWiiPy
+
+# libModMii
+
+libModMii is a Python-based toolkit aimed to rebuild modmii core functionalities
+
+## Description
+This project automates tasks related to Wii/vWii homebrew and system management, including:
+- Downloading titles from Nintendo Update Servers (NUS)
+- Analyzing SysCheck reports
+- Batch conversion utilities
+
+## How to Run
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/jmischler72/libModMii.git
+   cd libModMii
+   ```
+
+2. **Create and activate a virtual environment:**
+   ```sh
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+
+3. **Install dependencies:**
+   ```sh
+   pip install -r requirements.txt
+   ```
+
+4. **Run the main script:**
+   ```sh
+   python main.py
+   ```
+   Or run any utility script directly, e.g.:
+   ```sh
+   python downloader/nus_download.py
+   ```
+
+## Special Thanks
+
+- **ModMii**: For inspiration, resources, and community support in Wii homebrew.  
+   [ModMii Official Website](https://modmii.github.io/)
+- **libWiiPy**: For providing the Python library powering Wii Wads/Ios file operations.  
+   [libWiiPy on GitHub](https://github.com/NinjaCheetah/libWiiPy)
