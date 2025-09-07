@@ -35,17 +35,12 @@ with importlib.resources.files('libModMii.assets').joinpath('database.json').ope
 
 def get_database_entry(entry: str) -> DatabaseEntry:
     entry_data = database['entries'].get(entry)
+    if not entry_data:
+        raise ValueError(f'Entry "{entry}" not found in the database.')
     if entry_data and not os.path.splitext(entry_data['wadname'])[1]:
         entry_data['wadname'] += '.wad'
     return DatabaseEntry(**entry_data)
 
-def get_database_entry_from_wadname(wadname: str) -> Optional[DatabaseEntry]:
-    if not wadname.endswith('.wad'):
-        wadname += '.wad'
-    for entry in database['entries'].values():
-        if entry['wadname'] == wadname:
-            return DatabaseEntry(**entry)
-    return None
 
 def get_all_entries() -> dict:
     return database['entries']

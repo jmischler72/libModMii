@@ -1,11 +1,20 @@
-from typing import Dict, Any
+from typing import Dict, Any, Optional
+from dataclasses import dataclass
 from . import info_helpers as info
 from . import validation_helpers as validation
 
 class SyscheckError(Exception):
     pass
 
-def get_syscheck_infos(data: str) -> Dict[str, Any]:
+@dataclass
+class SyscheckInfos:
+    region: str
+    hbcVersion: Optional[str]
+    systemMenuVersion: Optional[str]
+    firmware: Dict[str, str]
+    consoleType: str
+
+def get_syscheck_infos(data: str) -> SyscheckInfos:
     data = validation.translate_keywords_to_english(data)
     
     if not validation.validate_syscheck_data(data):
@@ -29,17 +38,17 @@ def get_syscheck_infos(data: str) -> Dict[str, Any]:
             f'The firmware region "{firmware["SMregion"]}" does not match the console region "{region_short_code}"'
         )
 
-    return {
-        'region': region,
-        'hbcVersion': hbc_version,
-        'systemMenuVersion': system_menu_version,
-        'firmware': {
+    return SyscheckInfos(
+        region=region,
+        hbcVersion=hbc_version,
+        systemMenuVersion=system_menu_version,
+        firmware={
             'SMregion': firmware['SMregion'],
             'firmware': firmware['firmware'],
             'firmwareVersion': firmware['firmwareVersion'],
         },
-        'consoleType': console_type,
-    }
+        consoleType=console_type
+    )
 
 def get_syscheck_analysis(data: str, activeIOS: bool = False, extraProtection: bool = False) -> Dict[str, Any]:
     infos = get_syscheck_infos(data)
