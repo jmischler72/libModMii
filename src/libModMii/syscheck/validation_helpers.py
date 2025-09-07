@@ -116,7 +116,7 @@ def check_for_missing_ios(data: str, region: str, console_type: str) -> List[str
         {'ios': 'IOS43', 'pattern': [re.compile(r'^IOS43 \(rev 3607\): No Patches$', re.MULTILINE)]},
         {'ios': 'IOS45', 'pattern': [re.compile(r'^IOS45 \(rev 3607\): No Patches$', re.MULTILINE)]},
         {'ios': 'IOS46', 'pattern': [re.compile(r'^IOS46 \(rev 3607\): No Patches$', re.MULTILINE)]},
-        {'ios': 'IOS48v4124', 'pattern': [re.compile(r'^IOS48 \(rev 4124\): No Patches$', re.MULTILINE)]},
+        {'ios': 'IOS48', 'pattern': [re.compile(r'^IOS48 \(rev 4124\): No Patches$', re.MULTILINE)]},
         {'ios': 'IOS53', 'pattern': [re.compile(r'^IOS53 \(rev 5663\): No Patches$', re.MULTILINE)]},
         {'ios': 'IOS55', 'pattern': [re.compile(r'^IOS55 \(rev 5663\): No Patches$', re.MULTILINE)]},
         {'ios': 'IOS56', 'pattern': [re.compile(r'^IOS56 \(rev 5662\): No Patches$', re.MULTILINE)]},
